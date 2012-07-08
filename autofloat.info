@@ -1,1 +1,5 @@
 name = AutoFloat
+description = A text format filter that wraps images in a span with odd/even classes to make them float alternately left and right.
+core = 7.x
+
+files[] = autofloat.module
