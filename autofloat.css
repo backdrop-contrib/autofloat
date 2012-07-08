@@ -1,0 +1,14 @@
+/**
+ * Float images found in the body text alternately right and left.
+ */
+
+.content span.autofloat-odd {
+  float: right;
+  margin: 5px 0 0 10px;
+}
+
+.content span.autofloat-even {
+  float: left;
+  margin: 5px 5px 0 0;
+}
+

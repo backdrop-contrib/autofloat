@@ -1,0 +1,102 @@
+<?php
+
+/**
+ * Implements hook_help(). 
+ */
+function autofloat_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#autofloat':
+      // Return a line-break version of the README.txt.
+      return _filter_autop(file_get_contents( dirname(__FILE__) . "/README.txt") );
+  }
+}
+
+/**
+ * Determine the setting to use autofloat.css or not.
+ */
+$path = drupal_get_path('module', 'autofloat');
+if (variable_get('autofloat_css', 1)) {
+  drupal_add_css($path . '/autofloat.css');
+}
+
+/**
+ * Implements hook_menu().
+ */
+function autofloat_menu() {
+  $items['admin/config/content/autofloat'] = array(
+    'title' => 'AutoFloat',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('autofloat_admin_settings'),
+    'access arguments' => array('administer site configuration'),
+    'description' => "Filter settings. Start floating left or right, exclude module's css and define selectors/rejectors.",
+    'file' => 'autofloat.admin.inc',
+  );
+ return $items;
+}
+
+/**
+ * Implements hook_filter_info().
+ */
+function autofloat_filter_info() {
+  $filters['filter_autofloat'] = array(
+    'title' =>  t('Auto Float'),
+    'description' => t('Images will float left and right unless escaped with a class <em>nofloat</em>.'),
+    'process callback' => '_filter_autofloat',
+    'tips callback' => '_filter_autofloat_tips',
+  );
+  return $filters;
+}
+
+/**
+ * Returns the filter information for the filter help page.
+ */
+function _filter_autofloat_tips($filter, $format, $long = TRUE) {
+  $output = t("Images will float left and right unless escaped with a class <em>nofloat</em>.");
+  return $output;
+}
+
+/**
+ * Processes the autofloat filter. Find and process a rejected 'div', a selected 'span', a link containing an image or just an image.
+ */
+function _filter_autofloat($text, $filter) {
+  $selector = variable_get('autofloat_span', 'caption');
+  $selector = explode(',', $selector);
+  if (isset($selector[0]) == FALSE) {
+    $selector[0] = '';
+  }
+  if (isset($selector[1]) == FALSE) {
+    $selector[1] = '';
+  }
+  $rejector = variable_get('autofloat_div', 'flickr-photoset');
+  $rejector = explode(',', $rejector);
+  if (isset($rejector[0]) == FALSE) {
+    $rejector[0] = '';
+  }
+  if (isset($rejector[1]) == FALSE) {
+    $rejector[1] = '';
+  }
+  $text = preg_replace_callback('~<((div ([^>]*)(class\\s*=\\s*["\'](nofloat|' . trim($rejector[0]) . '|' . trim($rejector[1]) . ')["\'])([^>]*)>(.*?)</div)|(span([^>]*)(class\\s*=\\s*["\'](float|' . trim($selector[0]) . '|' . trim($selector[1]) . ')["\'])([^>]*)>(.*?)</span)|(a[^>]*)(href=)([^>]*)(><img[^>]*>(.*?)(</img>)?</a)|(img (.+?)))>~is', 'autofloat_filter_callback', $text);
+  return $text;
+}
+
+/**
+ * Filter callback. Apply a 'span' wrapper with an alternating class but only when a 'nofloat' class is NOT found or the element is NOT a 'div'.
+ */
+function autofloat_filter_callback($matches) {
+  static $count = 0;
+  if (preg_match('~((class\\s*=\\s*["\']nofloat)|(^<div))~i', $matches[0]) == 0) {
+    if (variable_get('autofloat_start', 0) == 0) {
+      $zebra = ($count % 2) ? 'even' : 'odd';
+    }
+    else {
+      $zebra = ($count % 2) ? 'odd' : 'even';
+    }
+    $count++;
+    return '<span class="autofloat-' . $zebra . '">' . $matches[0] . '</span>';
+    return '';
+  }
+  else {
+    return $matches[0];
+    return '';
+  }
+}
