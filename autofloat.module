@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Autofloat module: A text format filter that floats images left and right automatically.
+ * Autofloat module: A filter that floats images left and right automatically.
  */
 
 /**
@@ -60,8 +60,7 @@ function _autofloat_filter_tips($filter, $format, $long = TRUE) {
 }
 
 /**
- * Processes the autofloat filter.
- * Find and process a rejected 'div', a selected 'span', a link containing an image or just an image.
+ * Find a rejected 'div', a selected 'span', a link with image or an image.
  */
 function _autofloat_filter($text, $filter) {
   $selector = variable_get('autofloat_span', 'caption');
@@ -85,9 +84,7 @@ function _autofloat_filter($text, $filter) {
 }
 
 /**
- * Filter callback.
- * Apply a 'span' wrapper with an alternating class.
- * Only when a 'nofloat' class is NOT found or the element is NOT a 'div'.
+ * Filter callback. Conditionally apply a wrapper with an alternating class.
  */
 function autofloat_filter_callback($matches) {
   static $count = 0;
