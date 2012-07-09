@@ -1,13 +1,17 @@
 <?php
+/**
+ * @file
+ * Autofloat module: A text format filter that floats images left and right automatically.
+ */
 
 /**
- * Implements hook_help(). 
+ * Implements hook_help().
  */
 function autofloat_help($path, $arg) {
   switch ($path) {
     case 'admin/help#autofloat':
       // Return a line-break version of the README.txt.
-      return _filter_autop(file_get_contents( dirname(__FILE__) . "/README.txt") );
+      return _filter_autop(file_get_contents(dirname(__FILE__) . "/README.txt"));
   }
 }
 
@@ -31,7 +35,7 @@ function autofloat_menu() {
     'description' => "Filter settings. Start floating left or right, exclude module's css and define selectors/rejectors.",
     'file' => 'autofloat.admin.inc',
   );
- return $items;
+  return $items;
 }
 
 /**
@@ -41,8 +45,8 @@ function autofloat_filter_info() {
   $filters['filter_autofloat'] = array(
     'title' =>  t('Auto Float'),
     'description' => t('Images will float left and right unless escaped with a class <em>nofloat</em>.'),
-    'process callback' => '_filter_autofloat',
-    'tips callback' => '_filter_autofloat_tips',
+    'process callback' => '_autofloat_filter',
+    'tips callback' => '_autofloat_filter_tips',
   );
   return $filters;
 }
@@ -50,15 +54,16 @@ function autofloat_filter_info() {
 /**
  * Returns the filter information for the filter help page.
  */
-function _filter_autofloat_tips($filter, $format, $long = TRUE) {
+function _autofloat_filter_tips($filter, $format, $long = TRUE) {
   $output = t("Images will float left and right unless escaped with a class <em>nofloat</em>.");
   return $output;
 }
 
 /**
- * Processes the autofloat filter. Find and process a rejected 'div', a selected 'span', a link containing an image or just an image.
+ * Processes the autofloat filter.
+ * Find and process a rejected 'div', a selected 'span', a link containing an image or just an image.
  */
-function _filter_autofloat($text, $filter) {
+function _autofloat_filter($text, $filter) {
   $selector = variable_get('autofloat_span', 'caption');
   $selector = explode(',', $selector);
   if (isset($selector[0]) == FALSE) {
@@ -80,7 +85,9 @@ function _filter_autofloat($text, $filter) {
 }
 
 /**
- * Filter callback. Apply a 'span' wrapper with an alternating class but only when a 'nofloat' class is NOT found or the element is NOT a 'div'.
+ * Filter callback.
+ * Apply a 'span' wrapper with an alternating class.
+ * Only when a 'nofloat' class is NOT found or the element is NOT a 'div'.
  */
 function autofloat_filter_callback($matches) {
   static $count = 0;

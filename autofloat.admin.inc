@@ -1,12 +1,11 @@
 <?php
-
 /**
  * @file
- * The admin settings for the AutoFloat module
+ * The admin settings for the AutoFloat module.
  */
 
 /**
- * Implementation of hook_settings
+ * Implements hook_settings().
  */
 function autofloat_admin_settings() {
   $form['autofloat_start'] = array(
@@ -14,9 +13,9 @@ function autofloat_admin_settings() {
     '#title' => t('Start with the first image on the..'),
     '#options' => array(
       0 => t('right'),
-      1 => t("left (swaps <em>odd</em> and <em>even</em> classes)")
+      1 => t("left (swaps <em>odd</em> and <em>even</em> classes)"),
     ),
-    '#default_value' => variable_get('autofloat_start', 0 ),
+    '#default_value' => variable_get('autofloat_start', 0),
     '#description' => t('Re-save existing content to apply changes.'),
   );
   $form['autofloat_css'] = array(
@@ -46,6 +45,9 @@ function autofloat_admin_settings() {
   return system_settings_form($form);
 }
 
+/**
+ * Implements hook_admin_settings_submit().
+ */
 function autofloat_admin_settings_submit($form, &$form_state) {
   system_settings_form_submit($form, $form_state);
 }
