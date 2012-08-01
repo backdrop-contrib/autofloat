@@ -40,7 +40,8 @@ the 'filter processing order'.
 
 Configure under '/admin/config/content/autofloat'.
 
-Re-save existing nodes you want to apply AutoFloat to.
+Re-save existing nodes you want to apply AutoFloat to. If you still can't see
+any changes, try clearing both your site and browser cache as well.
 
 
 -- USAGE --

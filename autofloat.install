@@ -19,8 +19,8 @@ function autofloat_install() {
  * Implements hook_uninstall().
  */
 function autofloat_uninstall() {
-  variable_del('autofloat_start');
-  variable_del('autofloat_css');
-  variable_del('autofloat_span');
-  variable_del('autofloat_div');
+  // Delete all variables set in variable table.
+  db_delete('variable')
+  ->condition('name', 'autofloat_%', 'LIKE')
+  ->execute();
 }

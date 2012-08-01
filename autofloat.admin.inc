@@ -43,11 +43,5 @@ function autofloat_admin_settings() {
   );
 
   return system_settings_form($form);
-}
-
-/**
- * Implements hook_admin_settings_submit().
- */
-function autofloat_admin_settings_submit($form, &$form_state) {
-  system_settings_form_submit($form, $form_state);
+  drupal_set_message(t('The settings have been saved successfully.'));
 }

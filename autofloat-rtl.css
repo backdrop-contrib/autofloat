@@ -1,0 +1,13 @@
+/**
+ * Float images alternately in right-to-left content.
+ */
+
+.content span.autofloat-odd {
+  float: left;
+  margin: 5px 5px 0 0;
+}
+
+.content span.autofloat-even {
+  float: right;
+  margin: 5px 0 0 10px;
+}

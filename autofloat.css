@@ -3,11 +3,11 @@
  */
 
 .content span.autofloat-odd {
-  float: right;
-  margin: 5px 0 0 10px;
+  float: right; /* LTR */
+  margin: 5px 0 0 10px; /* LTR */
 }
 
 .content span.autofloat-even {
-  float: left;
-  margin: 5px 5px 0 0;
+  float: left; /* LTR */
+  margin: 5px 5px 0 0; /* LTR */
 }

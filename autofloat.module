@@ -16,11 +16,13 @@ function autofloat_help($path, $arg) {
 }
 
 /**
- * Determine the setting to use autofloat.css or not.
+ * Implements hook_init().
  */
-$path = drupal_get_path('module', 'autofloat');
-if (variable_get('autofloat_css', 1)) {
-  drupal_add_css($path . '/autofloat.css');
+function autofloat_init() {
+  // Determine the setting to use autofloat.css or not.
+  if (variable_get('autofloat_css', 1)) {
+    drupal_add_css(drupal_get_path('module', 'autofloat') . '/autofloat.css');
+  }
 }
 
 /**
@@ -31,7 +33,7 @@ function autofloat_menu() {
     'title' => 'AutoFloat',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('autofloat_admin_settings'),
-    'access arguments' => array('administer site configuration'),
+    'access arguments' => array('administer text formats and filters'),
     'description' => "Filter settings. Start floating left or right, exclude module's css and define selectors/rejectors.",
     'file' => 'autofloat.admin.inc',
   );
@@ -46,6 +48,7 @@ function autofloat_filter_info() {
     'title' =>  t('Auto Float'),
     'description' => t('Images will float left and right unless escaped with a class <em>nofloat</em>.'),
     'process callback' => '_autofloat_filter',
+    'settings callback' => '_autofloat_filter_settings',
     'tips callback' => '_autofloat_filter_tips',
   );
   return $filters;
@@ -60,11 +63,23 @@ function _autofloat_filter_tips($filter, $format, $long = TRUE) {
 }
 
 /**
+ * Notice in the AutoFloat settings on the text format configuration page.
+ */
+function _autofloat_filter_settings($form, &$form_state, $filter, $format, $defaults, $filters) {
+  $elements['notice'] = array(
+    '#markup' => t('<a href="@settings">AutoFloat Filter settings</a> are shared by all the text formats where it is enabled.', array('@settings' => url('admin/config/content/autofloat'))),
+  );
+  return $elements;
+}
+
+/**
  * Find a rejected 'div', a selected 'span', a link with image or an image.
  */
 function _autofloat_filter($text, $filter) {
   $selector = variable_get('autofloat_span', 'caption');
+  // Divide the variable into two selectors if a comma is found.
   $selector = explode(',', $selector);
+  // Make sure both array keys exist, if not the regex breaks.
   if (isset($selector[0]) == FALSE) {
     $selector[0] = '';
   }
@@ -72,14 +87,24 @@ function _autofloat_filter($text, $filter) {
     $selector[1] = '';
   }
   $rejector = variable_get('autofloat_div', 'flickr-photoset');
+  // Divide the variable into two rejectors if a comma is found.
   $rejector = explode(',', $rejector);
+  // Make sure both array keys exist, if not the regex breaks.
   if (isset($rejector[0]) == FALSE) {
     $rejector[0] = '';
   }
   if (isset($rejector[1]) == FALSE) {
     $rejector[1] = '';
   }
-  $text = preg_replace_callback('~<((div ([^>]*)(class\\s*=\\s*["\'](nofloat|' . trim($rejector[0]) . '|' . trim($rejector[1]) . ')["\'])([^>]*)>(.*?)</div)|(span([^>]*)(class\\s*=\\s*["\'](float|' . trim($selector[0]) . '|' . trim($selector[1]) . ')["\'])([^>]*)>(.*?)</span)|(a[^>]*)(href=)([^>]*)(><img[^>]*>(.*?)(</img>)?</a)|(img (.+?)))>~is', 'autofloat_filter_callback', $text);
+  // Regex in four parts (divided by '|') matching a rejected 'div', a
+  // selected 'span', a link with image or an image. A pattern inside an
+  // already found pattern gets ignored, to avoid floats inside floats.
+  $text = preg_replace_callback('@<(
+  div ([^>]*)(class\\s*=\\s*["\'](nofloat|' . trim($rejector[0]) . '|' . trim($rejector[1]) . ')["\'])([^>]*)>(.*?)</div| # find a rejected div
+  span([^>]*)(class\\s*=\\s*["\'](float|' . trim($selector[0]) . '|' . trim($selector[1]) . ')["\'])([^>]*)>(.*?)</span| # find a selected span
+  (a[^>]*)(href=)([^>]*)(><img[^>]*>(.*?)(</img>)?</a)| # find a link with image
+  img (.+?) # find an image
+  )>@isx', 'autofloat_filter_callback', $text);
   return $text;
 }
 
@@ -88,7 +113,9 @@ function _autofloat_filter($text, $filter) {
  */
 function autofloat_filter_callback($matches) {
   static $count = 0;
-  if (preg_match('~((class\\s*=\\s*["\']nofloat)|(^<div))~i', $matches[0]) == 0) {
+  // See if no class of nofloat is found and we are not dealing with a div.
+  if (preg_match('@((class\\s*=\\s*["\']nofloat)|(^<div))@i', $matches[0]) == 0) {
+  // Start on the left or right depending on the settings.
     if (variable_get('autofloat_start', 0) == 0) {
       $zebra = ($count % 2) ? 'even' : 'odd';
     }
@@ -96,11 +123,12 @@ function autofloat_filter_callback($matches) {
       $zebra = ($count % 2) ? 'odd' : 'even';
     }
     $count++;
+  // Wrap our element in a span with alternating class.
     return '<span class="autofloat-' . $zebra . '">' . $matches[0] . '</span>';
-    return '';
   }
+  // Or return the unwrapped unaltered string. Step necessary to ignore images
+  // inside an element that should be rejected for floating.
   else {
     return $matches[0];
-    return '';
   }
 }
