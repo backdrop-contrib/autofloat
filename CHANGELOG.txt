@@ -29,4 +29,3 @@
 
 By lolandese:
   Added CHANGELOG.txt.
-

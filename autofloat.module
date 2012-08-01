@@ -115,7 +115,7 @@ function autofloat_filter_callback($matches) {
   static $count = 0;
   // See if no class of nofloat is found and we are not dealing with a div.
   if (preg_match('@((class\\s*=\\s*["\']nofloat)|(^<div))@i', $matches[0]) == 0) {
-  // Start on the left or right depending on the settings.
+    // Start on the left or right depending on the settings.
     if (variable_get('autofloat_start', 0) == 0) {
       $zebra = ($count % 2) ? 'even' : 'odd';
     }
@@ -123,7 +123,7 @@ function autofloat_filter_callback($matches) {
       $zebra = ($count % 2) ? 'odd' : 'even';
     }
     $count++;
-  // Wrap our element in a span with alternating class.
+    // Wrap our element in a span with alternating class.
     return '<span class="autofloat-' . $zebra . '">' . $matches[0] . '</span>';
   }
   // Or return the unwrapped unaltered string. Step necessary to ignore images
