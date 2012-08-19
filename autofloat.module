@@ -45,7 +45,7 @@ function autofloat_menu() {
  */
 function autofloat_filter_info() {
   $filters['filter_autofloat'] = array(
-    'title' =>  t('Auto Float'),
+    'title' => t('Auto Float'),
     'description' => t('Images will float left and right unless escaped with a class "nofloat".'),
     'process callback' => '_autofloat_filter',
     'settings callback' => '_autofloat_filter_settings',
@@ -67,7 +67,7 @@ function _autofloat_filter_tips($filter, $format, $long = TRUE) {
  */
 function _autofloat_filter_settings($form, &$form_state, $filter, $format, $defaults, $filters) {
   $elements['notice'] = array(
-    '#markup' => l(t('AutoFloat Filter settings'), 'admin/config/content/autofloat', array('attributes' => array('title' => 'Unified settings page'))) . t(' are shared by all the text formats where it is enabled.')
+    '#markup' => l(t('AutoFloat Filter settings'), 'admin/config/content/autofloat', array('attributes' => array('title' => 'Unified settings page'))) . t(' are shared by all the text formats where it is enabled.'),
   );
   return $elements;
 }
