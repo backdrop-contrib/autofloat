@@ -11,7 +11,7 @@ function autofloat_install() {
   $t = get_t();
   $link1 = l($t('Configuration > Content authoring > Text formats'), 'admin/config/content/formats');
   $link2 = l($t('Configuration > Content authoring > AutoFloat'), 'admin/config/content/autofloat');
-  $text = $t("Add the AutoFloat filter to a text format under " . $link1 . ". <strong>Move it below other image related filters</strong> in the <em>filter processing order</em>.<br />AutoFloat settings are available under " . $link2 . ".");
+  $text = $t('Add the AutoFloat filter to a text format under ') . $link1 . $t('. Move it below other image related filters in the filter processing order. AutoFloat settings are available under ') . $link2 . '.';
   drupal_set_message(filter_xss_admin($text));
 }
 
@@ -23,4 +23,5 @@ function autofloat_uninstall() {
   db_delete('variable')
   ->condition('name', 'autofloat_%', 'LIKE')
   ->execute();
+  cache_clear_all('variables', 'cache_bootstrap');
 }

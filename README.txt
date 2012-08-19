@@ -15,6 +15,14 @@ Configurable:
 * add classes to exclude a 'div', e.g. a set of thumbnails. 
 
 
+-- EXAMPLE --
+
+The filter turns:
+  ‹img src="/path/photo.jpg"›
+into:
+  ‹span class="autofloat-odd"›‹img src="/path/photo.jpg"›‹/span›
+
+
 -- FEATURES --
 
 Generates an organized layout of images in a text automatically.
@@ -65,17 +73,14 @@ doesn't cover the full width, the image might not float as expected.
 Check your CSS before submitting an issue.
 
 
--- CUSTOM CSS --
+-- CSS --
 
-The autofloat.css file adds a right-margin to left floating images and a 
-left-margin to right floating images. 
-Exclude the module's CSS on the configuration page to use your theme's 
-style.css.
+The autofloat.css and autofloat-rtl.css files add a right-margin to left
+floating images and a left-margin to right floating images. 
 
+If your images won't float your theme might not use the id or class "content"
+to target the node body. Adjust the id or class used in the modules' css files
+accordingly.
 
--- EXAMPLE --
-
-The filter turns:
-  ‹img src="/path/photo.jpg"›
-into:
-  ‹span class="autofloat-odd"›‹img src="/path/photo.jpg"›‹/span›
+You can exclude the module's CSS on the configuration page to use your
+customized theme's style.css.

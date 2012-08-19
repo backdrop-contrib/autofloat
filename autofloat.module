@@ -11,7 +11,7 @@ function autofloat_help($path, $arg) {
   switch ($path) {
     case 'admin/help#autofloat':
       // Return a line-break version of the README.txt.
-      return _filter_autop(file_get_contents(dirname(__FILE__) . "/README.txt"));
+      return _filter_autop(file_get_contents(dirname(__FILE__) . '/README.txt'));
   }
 }
 
@@ -21,7 +21,7 @@ function autofloat_help($path, $arg) {
 function autofloat_init() {
   // Determine the setting to use autofloat.css or not.
   if (variable_get('autofloat_css', 1)) {
-    drupal_add_css(drupal_get_path('module', 'autofloat') . '/autofloat.css');
+    drupal_add_css(drupal_get_path('module', 'autofloat') . '/autofloat.css', array('group' => CSS_DEFAULT, 'every_page' => TRUE));
   }
 }
 
@@ -34,7 +34,7 @@ function autofloat_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('autofloat_admin_settings'),
     'access arguments' => array('administer text formats and filters'),
-    'description' => "Filter settings. Start floating left or right, exclude module's css and define selectors/rejectors.",
+    'description' => 'Filter settings. Start floating left or right, exclude module\'s css and define selectors/rejectors.',
     'file' => 'autofloat.admin.inc',
   );
   return $items;
@@ -46,7 +46,7 @@ function autofloat_menu() {
 function autofloat_filter_info() {
   $filters['filter_autofloat'] = array(
     'title' =>  t('Auto Float'),
-    'description' => t('Images will float left and right unless escaped with a class <em>nofloat</em>.'),
+    'description' => t('Images will float left and right unless escaped with a class "nofloat".'),
     'process callback' => '_autofloat_filter',
     'settings callback' => '_autofloat_filter_settings',
     'tips callback' => '_autofloat_filter_tips',
@@ -58,7 +58,7 @@ function autofloat_filter_info() {
  * Returns the filter information for the filter help page.
  */
 function _autofloat_filter_tips($filter, $format, $long = TRUE) {
-  $output = t("Images will float left and right unless escaped with a class <em>nofloat</em>.");
+  $output = t('Images will float left and right unless escaped with a class "nofloat".');
   return $output;
 }
 
@@ -67,7 +67,7 @@ function _autofloat_filter_tips($filter, $format, $long = TRUE) {
  */
 function _autofloat_filter_settings($form, &$form_state, $filter, $format, $defaults, $filters) {
   $elements['notice'] = array(
-    '#markup' => t('<a href="@settings">AutoFloat Filter settings</a> are shared by all the text formats where it is enabled.', array('@settings' => url('admin/config/content/autofloat'))),
+    '#markup' => l(t('AutoFloat Filter settings'), 'admin/config/content/autofloat', array('attributes' => array('title' => 'Unified settings page'))) . t(' are shared by all the text formats where it is enabled.')
   );
   return $elements;
 }

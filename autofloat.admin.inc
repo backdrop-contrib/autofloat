@@ -13,7 +13,7 @@ function autofloat_admin_settings() {
     '#title' => t('Start with the first image on the..'),
     '#options' => array(
       0 => t('right'),
-      1 => t("left (swaps <em>odd</em> and <em>even</em> classes)"),
+      1 => t('left (swaps "odd" and "even" classes)'),
     ),
     '#default_value' => variable_get('autofloat_start', 0),
     '#description' => t('Re-save existing content to apply changes.'),
@@ -27,19 +27,19 @@ function autofloat_admin_settings() {
   $form['target_settings'] = array(
     '#type' => 'fieldset',
     '#title' => t('Selector/rejector settings'),
-    '#description' => t("Images will float unless they have the class <em>nofloat</em>. <strong>Re-save existing content to apply changes.</strong><br />Avoid adding classes manually by defining classes here added by other modules/filters. Use your browser's inspector to find them."),
+    '#description' => t('Images will float unless they have the class "nofloat". Re-save existing content to apply changes. Avoid adding classes manually by defining classes here added by other modules/filters. Use your browser inspector to find them.'),
   );
   $form['target_settings']['autofloat_span'] = array(
     '#type' => 'textfield',
-    '#title' => t("Additional <em>span</em> classes to float"),
+    '#title' => t('Additional span classes to float'),
     '#default_value' => variable_get('autofloat_span', 'caption'),
-    '#description' => t("<strong>A <em>span</em> with the class <em>float</em> will float all containing content</strong>, e.g. the image with a caption under it. <br />Optionally define others. Maximum two, divided by a comma. <br />Example: <em>caption</em>"),
+    '#description' => t('A "span" with the class "float" will float all containing content, e.g. the image with a caption under it. Optionally define others. Maximum two, divided by a comma. Example: "caption"'),
   );
   $form['target_settings']['autofloat_div'] = array(
     '#type' => 'textfield',
-    '#title' => t("Additional <em>div</em> classes to ignore"),
+    '#title' => t('Additional "div" classes to ignore'),
     '#default_value' => variable_get('autofloat_div', 'flickr-photoset'),
-    '#description' => t("<strong>Images in a <em>div</em> with the class <em>nofloat</em> do NOT float</strong>, e.g. a set of thumbnails. <br />Optionally define others. Maximum two, divided by a comma. <br />Example: <em>flickr-photoset</em>"),
+    '#description' => t('Images in a "div" with the class "nofloat" do NOT float, e.g. a set of thumbnails. Optionally define others. Maximum two, divided by a comma. Example: "flickr-photoset"'),
   );
 
   return system_settings_form($form);
