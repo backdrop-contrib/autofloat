@@ -43,5 +43,4 @@ function autofloat_admin_settings() {
   );
 
   return system_settings_form($form);
-  drupal_set_message(t('The settings have been saved successfully.'));
 }
