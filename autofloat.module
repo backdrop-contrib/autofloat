@@ -67,7 +67,12 @@ function _autofloat_filter_tips($filter, $format, $long = TRUE) {
  */
 function _autofloat_filter_settings($form, &$form_state, $filter, $format, $defaults, $filters) {
   $elements['notice'] = array(
-    '#markup' => t('!config_link are shared by all the text formats where it is enabled.', array('!config_link' => l(t('AutoFloat Filter settings'), 'admin/config/content/autofloat', array('attributes' => array('title' => 'Unified settings page'))))),
+    '#markup' => t('!config_link are shared by all the text formats where it is enabled.', array(
+      '!config_link' => l(t('AutoFloat Filter settings'), 'admin/config/content/autofloat', array(
+        'attributes' => array('title' => 'Unified settings page'),
+        )
+      )
+    )),
   );
   return $elements;
 }

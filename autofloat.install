@@ -8,7 +8,12 @@
  * Implements hook_install().
  */
 function autofloat_install() {
-  $text = t('Add the AutoFloat filter to a text format under !formats_link. Move it below other image related filters in the filter processing order. AutoFloat settings are available under !config_link.',array('!formats_link' => l(t('Configuration > Content authoring > Text formats'), 'admin/config/content/formats'), '!config_link' => l(t('Configuration > Content authoring > AutoFloat'), 'admin/config/content/autofloat')));
+  $t = get_t();
+  $text = $t('Add the AutoFloat filter to a text format under !formats_link. Move it below other image related filters in the filter processing order. AutoFloat settings are available under !config_link.', array(
+    '!formats_link' => l($t('Configuration > Content authoring > Text formats'), 'admin/config/content/formats'),
+    '!config_link' => l($t('Configuration > Content authoring > AutoFloat'), 'admin/config/content/autofloat'),
+    )
+  );
   drupal_set_message($text);
 }
 
