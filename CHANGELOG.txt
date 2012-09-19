@@ -1,4 +1,21 @@
-#1676038 comment #10 by dwieeb:
+#1676038#comment-6474406 by klausi:
+  Added a section "Related projects" to the project page, linking to the Float
+  filter module.
+  autofloat_install(): no user provided input is involved here, removed
+  filter_xss_admin().
+  autofloat_install(): using placeholders with t() instead of concatenating
+  variables into translatable strings. Same in _autofloat_filter_settings().
+
+By lolandese:
+  Changed the comment references in the CHANGELOG.txt to use the id instead of
+  the sequential short number.
+  
+#1676038#comment-6434710 by lord_of_freaks:
+  Removed drupal_set_message() from autofloat.admin.inc because:
+  - it could never be called after a return statement
+  - Drupal takes care of displaying a message already after saving the settings.
+
+#1676038#comment-6364684 by dwieeb:
   In .module file in the drupal_add_css() function added options to group the
   css with other modules (CSS_DEFAULT) and set the 'every_page' flag option to
   TRUE.
@@ -13,7 +30,7 @@
   function.
   In the .install file added a line to clear the variable cache after uninstall.
   
-#1676038 comment #7 by sanchi.girotra:
+#1676038#comment-6287048 by sanchi.girotra:
   In .install file used db_delete to delete all the variable starting
   with "autofloat_%", although this method should be avoided for modules that
   might get extended by other modules and therefore might use the same variable
@@ -26,13 +43,13 @@
   In .module file access argument "administer site configuration" replaced with
   "administer text formats and filters". Makes more sense.
 
-#1676038 comment #4 by drupaldrop:
+#1676038#comment-6219676 by drupaldrop:
   Added a 'Configure' link to the .info file to make the settings accessible
   from the modules overview page. Also added a notice with a link in the
   AutoFloat settings on the text format configuration page: "AutoFloat Filter
   settings are shared by all the text formats where it is enabled".
 
-#1676038 comment #3 by lolandese:
+#1676038#comment-6216646 by lolandese:
   Changed regex delimiting character from '~' to '@'.
   Enhanced readability of the regex, added an x-modifier to be able to split it
   over multiple lines and add inline comments. More info at
