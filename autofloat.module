@@ -71,7 +71,7 @@ function _autofloat_filter_settings($form, &$form_state, $filter, $format, $defa
       '!config_link' => l(t('AutoFloat Filter settings'), 'admin/config/content/autofloat', array(
         'attributes' => array('title' => 'Unified settings page'),
         )
-      )
+      ),
     )),
   );
   return $elements;
