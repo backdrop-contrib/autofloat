@@ -81,7 +81,7 @@ function _autofloat_filter_settings($form, &$form_state, $filter, $format, $defa
  * Find a rejected 'div', a selected 'span', a link with image or an image.
  */
 function _autofloat_filter($text, $filter) {
-  $selector = variable_get('autofloat_span', 'caption');
+  $selector = variable_get('autofloat_span', 'caption,flickr-wrap');
   // Divide the variable into two selectors if a comma is found.
   $selector = explode(',', $selector);
   // Make sure both array keys exist, if not the regex breaks.
@@ -137,3 +137,4 @@ function autofloat_filter_callback($matches) {
     return $matches[0];
   }
 }
+
