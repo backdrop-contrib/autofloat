@@ -81,53 +81,33 @@ function _autofloat_filter_settings($form, &$form_state, $filter, $format, $defa
  * Find a rejected 'div', a selected 'span', a link with image or an image.
  */
 function _autofloat_filter($text, $filter) {
-  $selector = variable_get('autofloat_span', 'caption,flickr-wrap');
-  // Divide the variable into more selectors if a comma is found.
-  $selector = explode(',', $selector);
-  // Make sure a variable exists, if not the regex breaks.
+  $selector = variable_get('autofloat_span', 'flickr-wrap');
+  // Divide the variable into two selectors if a comma is found.
+  $selector = array_map('trim', explode(',', $selector));
+  // Make sure both array keys exist, if not the regex breaks.
   if (isset($selector[0]) == FALSE) {
-    $select = '';
-  } else {
-    // Set the first selector.
-    $select = trim($selector[0]);
+    $selector[0] = 'non-existing-class-value';
   }
-  foreach (array_slice($selector, 1) as $value) {
-    // Concatenate with subsequent selectors, divided with OR symbol.
-    $select .= '|' . trim($value);
+  if (isset($selector[1]) == FALSE) {
+    $selector[1] = 'non-existing-class-value';
   }
   $rejector = variable_get('autofloat_div', 'flickr-photoset');
-  // Divide the variable into more rejectors if a comma is found.
-  $rejector = explode(',', $rejector);
-  // Make sure a variable exists, if not the regex breaks.
+  // Divide the variable into two rejectors if a comma is found.
+  $rejector = array_map('trim', explode(',', $rejector));
+  // Make sure both array keys exist, if not the regex breaks.
   if (isset($rejector[0]) == FALSE) {
-    $reject = '';
-  } else {
-    // Set the first rejector.
-    $reject = trim($rejector[0]);
+    $rejector[0] = 'non-existing-class-value';
   }
-  foreach (array_slice($rejector, 1) as $value) {
-    // Concatenate with subsequent rejectors, divided with OR symbol.
-    $reject .= '|' . trim($value);
+  if (isset($rejector[1]) == FALSE) {
+    $rejector[1] = 'non-existing-class-value';
   }
-  // Regex in four parts (divided by '|') matching a rejected 'div', a
-  // selected 'span', a link with image or an image. A pattern inside an
-  // already found pattern gets ignored, to avoid floats inside floats.
-  $text = preg_replace_callback('@<(
-  div ([^>]*)(class\\s*=\\s*["\'](nofloat|' . $reject . ')["\'])([^>]*)>(.*?)</div| # find a rejected div
-  span([^>]*)(class\\s*=\\s*["\'](float|' . $select . ')["\'])([^>]*)>(.*?)</span| # find a selected span
-  (a[^>]*)(href=)([^>]*)(><img[^>]*>(.*?)(</img>)?</a)| # find a link with image
-  img (.+?) # find an image
-  )>@isx', 'autofloat_filter_callback', $text);
-  return $text;
-}
-
-/**
- * Filter callback. Conditionally apply a wrapper with an alternating class.
- */
-function autofloat_filter_callback($matches) {
-  static $count = 0;
-  // See if no class of nofloat is found and we are not dealing with a div.
-  if (preg_match('@((class\\s*=\\s*["\']nofloat)|(^<div))@i', $matches[0]) == 0) {
+  $count = 0;
+  // Load string to DOMDocument.
+  $doc = filter_dom_load($text);
+  $xpath = new DOMXPath($doc);
+  // Iterate through the string neglecting elements nested inside those already
+  // processed or those to reject.
+  foreach ($xpath->query('//span[contains(@class, "' . $selector[0] . '") or contains(@class, "' . $selector[1] . '")][not(ancestor::*[@class="nofloat"] or ancestor::*[@class="' . $rejector[0] .'"] or ancestor::*[@class="' . $rejector[1] .'"])] | //img[not(ancestor::*[@class="nofloat"] or ancestor::*[@class="' . $rejector[0] .'"] or ancestor::*[@class="' . $rejector[1] .'"] or ancestor::span[contains(@class, "' . $selector[0] . '") or contains(@class, "' . $selector[1] . '")])]') as $tag) {
     // Start on the left or right depending on the settings.
     if (variable_get('autofloat_start', 0) == 0) {
       $zebra = ($count % 2) ? 'even' : 'odd';
@@ -136,13 +116,10 @@ function autofloat_filter_callback($matches) {
       $zebra = ($count % 2) ? 'odd' : 'even';
     }
     $count++;
-    // Wrap our element in a span with alternating class.
-    return '<span class="autofloat-' . $zebra . '">' . $matches[0] . '</span>';
+  // Add an alternating class value but maintain the existing ones.
+    $tag->setAttribute('class','autofloat-' . $zebra . ' ' . $tag->getAttribute('class'));
   }
-  // Or return the unwrapped unaltered string. Step necessary to ignore images
-  // inside an element that should be rejected for floating.
-  else {
-    return $matches[0];
-  }
+  // Convert a DOM object back to an HTML snippet.
+  $subject = filter_dom_serialize($doc);
+  return $subject;
 }
-
