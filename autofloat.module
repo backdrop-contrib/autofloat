@@ -107,7 +107,7 @@ function _autofloat_filter($text, $filter) {
   $xpath = new DOMXPath($doc);
   // Iterate through the string neglecting elements nested inside those already
   // processed or those to reject.
-  foreach ($xpath->query('//span[contains(@class, "' . $selector[0] . '") or contains(@class, "' . $selector[1] . '")][not(ancestor::*[@class="nofloat"] or ancestor::*[@class="' . $rejector[0] .'"] or ancestor::*[@class="' . $rejector[1] .'"])] | //img[not(ancestor::*[@class="nofloat"] or ancestor::*[@class="' . $rejector[0] .'"] or ancestor::*[@class="' . $rejector[1] .'"] or ancestor::span[contains(@class, "' . $selector[0] . '") or contains(@class, "' . $selector[1] . '")])]') as $tag) {
+  foreach ($xpath->query('//span[contains(@class, "float") or contains(@class, "' . $selector[0] . '") or contains(@class, "' . $selector[1] . '")][not(ancestor::*[@class="nofloat"] or ancestor::*[@class="' . $rejector[0] . '"] or ancestor::*[@class="' . $rejector[1] . '"])] | //img[not(ancestor-or-self::*[contains(@class, "nofloat")] or ancestor-or-self::*[contains(@class, "' . $rejector[0] . '")] or ancestor-or-self::*[contains(@class, "' . $rejector[1] . '")] or ancestor::span[contains(@class, "float") or contains(@class, "' . $selector[0] . '") or contains(@class, "' . $selector[1] . '")])]') as $tag) {
     // Start on the left or right depending on the settings.
     if (variable_get('autofloat_start', 0) == 0) {
       $zebra = ($count % 2) ? 'even' : 'odd';
@@ -116,8 +116,8 @@ function _autofloat_filter($text, $filter) {
       $zebra = ($count % 2) ? 'odd' : 'even';
     }
     $count++;
-  // Add an alternating class value but maintain the existing ones.
-    $tag->setAttribute('class','autofloat-' . $zebra . ' ' . $tag->getAttribute('class'));
+    // Add an alternating class value but maintain the existing ones.
+    $tag->setAttribute('class', 'autofloat-' . $zebra . ' ' . $tag->getAttribute('class'));
   }
   // Convert a DOM object back to an HTML snippet.
   $subject = filter_dom_serialize($doc);

@@ -33,14 +33,30 @@ function autofloat_admin_settings() {
     '#type' => 'textfield',
     '#title' => t('Additional span classes to float'),
     '#default_value' => variable_get('autofloat_span', 'caption,flickr-wrap'),
-    '#description' => t('A "span" with the class "float" will float all containing content, e.g. the image with a caption under it. Optionally define others divided by a comma. Example: "caption"'),
+    '#description' => t('A "span" with the class "float" will float all containing content, e.g. the image with a caption under it. Optionally define others. Maximum two, divided by a comma. Example: "caption".'),
   );
   $form['target_settings']['autofloat_div'] = array(
     '#type' => 'textfield',
     '#title' => t('Additional "div" classes to ignore'),
     '#default_value' => variable_get('autofloat_div', 'flickr-photoset'),
-    '#description' => t('Images in a "div" with the class "nofloat" do NOT float, e.g. a set of thumbnails. Optionally define others divided by a comma. Example: "flickr-photoset"'),
+    '#description' => t('Images nested within any element with the class "nofloat" will NOT float, e.g. a set of thumbnails. Optionally define others. Maximum two, divided by a comma. Example: "flickr-photoset".'),
   );
 
   return system_settings_form($form);
+}
+
+/**
+ * Validate autofloat settings submission.
+ */
+function autofloat_admin_settings_validate($form, &$form_state) {
+  // Accept maximum two class value for the selector field.
+  $limit = $form_state['values']['autofloat_span'];
+  if ((substr_count($limit, ',') > 1)) {
+    form_set_error('autofloat_span', t('Not more than two values.'));
+  }
+  // Accept maximum two class value for the rejector field.
+  $limit = $form_state['values']['autofloat_div'];
+  if ((substr_count($limit, ',') > 1)) {
+    form_set_error('autofloat_div', t('Not more than two values.'));
+  }
 }
