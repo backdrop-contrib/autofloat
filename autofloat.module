@@ -33,7 +33,7 @@ function autofloat_menu() {
     'title' => 'AutoFloat',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('autofloat_admin_settings'),
-    'access arguments' => array('administer text formats and filters'),
+    'access arguments' => array('administer filters'),
     'description' => 'Filter settings. Start floating left or right, exclude module\'s css and define selectors/rejectors.',
     'file' => 'autofloat.admin.inc',
   );
