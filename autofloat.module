@@ -50,6 +50,7 @@ function autofloat_filter_info() {
     'process callback' => '_autofloat_filter',
     'settings callback' => '_autofloat_filter_settings',
     'tips callback' => '_autofloat_filter_tips',
+    'weight' => 10,
   );
   return $filters;
 }
@@ -84,7 +85,7 @@ function _autofloat_filter($text, $filter) {
   $selector = variable_get('autofloat_span', 'flickr-wrap');
   // Divide the variable into two selectors if a comma is found.
   $selector = array_map('trim', explode(',', $selector));
-  // Make sure both array keys exist, if not the regex breaks.
+  // Make sure both array keys exist.
   if (isset($selector[0]) == FALSE) {
     $selector[0] = 'non-existing-class-value';
   }
