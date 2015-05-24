@@ -1,8 +1,8 @@
 AutoFloat
 =========
 
-A text format filter that an odd/even class to images or spans (image + caption)
-to make them float alternately left and right.
+A text format filter that adds an odd/even class to images or spans
+(image + caption) to make them float alternately left and right.
 
 Configurable:
 - the starting side

@@ -14,7 +14,7 @@ function autofloat_install() {
     '!config_link' => l($t('Configuration > Content authoring > AutoFloat'), 'admin/config/content/autofloat'),
     )
   );
-  drupal_set_message($text);
+  backdrop_set_message($text);
 }
 
 /**

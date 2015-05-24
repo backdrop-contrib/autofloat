@@ -32,7 +32,7 @@ function autofloat_config_info() {
 function autofloat_init() {
   // Determine the setting to use autofloat.css or not.
   if (config_get('autofloat.settings', 'autofloat_css')) {
-    drupal_add_css(drupal_get_path('module', 'autofloat') . '/css/autofloat.css', array('group' => CSS_DEFAULT, 'every_page' => TRUE));
+    backdrop_add_css(backdrop_get_path('module', 'autofloat') . '/css/autofloat.css', array('group' => CSS_DEFAULT, 'every_page' => TRUE));
   }
 }
 
@@ -42,7 +42,7 @@ function autofloat_init() {
 function autofloat_menu() {
   $items['admin/config/content/autofloat'] = array(
     'title' => 'AutoFloat',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('autofloat_admin_settings'),
     'access arguments' => array('administer filters'),
     'description' => 'Filter settings. Start floating left or right, exclude module\'s css and define selectors/rejectors.',
