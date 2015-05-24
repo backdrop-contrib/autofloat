@@ -42,7 +42,15 @@ function autofloat_admin_settings() {
     '#description' => t('Images nested within any element with the class "nofloat" will NOT float, e.g. a set of thumbnails. Optionally define others. Maximum two, divided by a comma. Example: "flickr-photoset".'),
   );
 
-  return system_settings_form($form);
+  $form['#validate'][] = 'autofloat_admin_settings_validate';
+  $form['#submit'][] = 'autofloat_admin_settings_submit';
+  // Add a submit button
+  $form['actions']['#type'] = 'actions';
+  $form['actions']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save configuration'),
+  );
+  return $form;
 }
 
 /**
@@ -59,4 +67,17 @@ function autofloat_admin_settings_validate($form, &$form_state) {
   if ((substr_count($limit, ',') > 1)) {
     form_set_error('autofloat_div', t('Not more than two values.'));
   }
+}
+
+/**
+ * Form submission handler for autofloat_admin_settings().
+ */
+function autofloat_admin_settings_submit($form, &$form_state) {
+  $config = config('autofloat.settings');
+  foreach ($form_state['values'] as $key => $value) {
+    $config->set($key, $value);
+  }
+
+  $config->save();
+  backdrop_set_message(t('The configuration options have been saved.'));
 }
