@@ -1,0 +1,7 @@
+{
+  "_config_name": "autofloat.settings",
+  "autofloat_start": 0,
+  "autofloat_css": 1,
+  "autofloat_span": "flickr-wrap",
+  "autofloat_div": "flickr-photoset"
+}
