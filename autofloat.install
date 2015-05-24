@@ -18,12 +18,20 @@ function autofloat_install() {
 }
 
 /**
- * Implements hook_uninstall().
+ * Move AutoFloat settings from variables to config.
  */
-function autofloat_uninstall() {
-  // Delete all variables set in variable table.
-  db_delete('variable')
-  ->condition('name', 'autofloat_%', 'LIKE')
-  ->execute();
-  cache_clear_all('variables', 'cache_bootstrap');
+function autofloat_update_1000() {
+  // Migrate variables to config.
+  $config = config('autofloat.settings');
+  $config->set('autofloat_start', update_variable_get('autofloat_start', 0));
+  $config->set('autofloat_css', update_variable_get('autofloat_css', 1));
+  $config->set('autofloat_span', update_variable_get('autofloat_span', 'flickr-wrap'));
+  $config->set('autofloat_div', update_variable_get('autofloat_div', 'flickr-photoset'));
+  $config->save();
+
+  // Delete variables.
+  update_variable_del('autofloat_start');
+  update_variable_del('autofloat_css');
+  update_variable_del('autofloat_span');
+  update_variable_del('autofloat_div');
 }

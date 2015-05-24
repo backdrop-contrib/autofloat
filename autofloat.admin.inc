@@ -15,13 +15,13 @@ function autofloat_admin_settings() {
       0 => t('right'),
       1 => t('left (swaps "odd" and "even" classes)'),
     ),
-    '#default_value' => variable_get('autofloat_start', 0),
+    '#default_value' => config_get('autofloat.settings', 'autofloat_start'),
     '#description' => t('Re-save existing content to apply changes.'),
   );
   $form['autofloat_css'] = array(
     '#type' => 'checkbox',
     '#title' => t('Use autofloat.css'),
-    '#default_value' => variable_get('autofloat_css', 1),
+    '#default_value' => config_get('autofloat.settings', 'autofloat_css'),
     '#description' => t('Uncheck to take care of the floating and margins yourself in custom css.'),
   );
   $form['target_settings'] = array(
@@ -32,13 +32,13 @@ function autofloat_admin_settings() {
   $form['target_settings']['autofloat_span'] = array(
     '#type' => 'textfield',
     '#title' => t('Additional span classes to float'),
-    '#default_value' => variable_get('autofloat_span', 'flickr-wrap'),
+    '#default_value' => config_get('autofloat.settings', 'autofloat_span'),
     '#description' => t('A "span" with the class "float" will float all containing content, e.g. the image with a caption under it. Optionally define others. Maximum two, divided by a comma. Example: "flickr-wrap".'),
   );
   $form['target_settings']['autofloat_div'] = array(
     '#type' => 'textfield',
     '#title' => t('Additional "div" classes to ignore'),
-    '#default_value' => variable_get('autofloat_div', 'flickr-photoset'),
+    '#default_value' => config_get('autofloat.settings', 'autofloat_div'),
     '#description' => t('Images nested within any element with the class "nofloat" will NOT float, e.g. a set of thumbnails. Optionally define others. Maximum two, divided by a comma. Example: "flickr-photoset".'),
   );
 
