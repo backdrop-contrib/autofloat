@@ -7,7 +7,7 @@ Helps to put an end to inline styling.
 
 Configurable:
 *   the starting side
-*   to exclude the module's CSS to use your theme's style.css
+*   to exclude the module's CSS to use your custom.css
 *   to add classes to target a 'span', e.g. in case a caption is displayed
 *   to add classes to exclude a 'div', e.g. a set of thumbnails.
 
@@ -111,6 +111,6 @@ This project is GPL v2 software. See the LICENSE.txt file in this directory for
 complete text.
 
 
-### Author & maintainer
+### Author & Maintainer
 
 - Martin Postma ([lolandese](https://www.drupal.org/u/lolandese))
