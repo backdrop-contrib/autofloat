@@ -1,7 +1,5 @@
 ## AutoFloat
-
-![](https://www.drupal.org/files/styles/grid-3/public/project-images/autofloat1.jpg?itok=Y3UYOFQr)
-
+<img align="right" src="https://www.drupal.org/files/styles/grid-3/public/project-images/autofloat1.jpg?itok=Y3UYOFQr">
 A text format filter that adds an odd/even class to images or spans
 (image + caption) to make them float alternately left and right with CSS.
 
