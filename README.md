@@ -74,6 +74,7 @@ https://backdropcms.org/guide/modules
 
 ### What popular 'caption' modules are tested to work with AutoFloat?
 
+In order of preference:
 *   The [Flickr](https://github.com/backdrop-contrib/flickr "GitHub project page") module adds a caption taken from the info available on Flickr. Apart from the title this can also include the date taken, location and photographer. One of the easiest ways to add a caption to embedded images.
 *   [jCaption](https://github.com/backdrop-contrib/jcaption "GitHub project page").  This captioning works without the need of additional user action per image. In the jCaption settings '_Copy class_' has to be selected (is the default).
 *   [Image Caption](https://github.com/backdrop-contrib/image_caption "GitHub project page").
