@@ -5,23 +5,12 @@
  */
 
 /**
- * Implements hook_help().
- */
-function autofloat_help($path, $arg) {
-  switch ($path) {
-    case 'admin/help#autofloat':
-      // Return a line-break version of the README.txt.
-      return _filter_autop(file_get_contents(dirname(__FILE__) . '/README.txt'));
-  }
-}
-
-/**
  * Implements hook_config_info().
  */
 function autofloat_config_info() {
   $prefixes['autofloat.settings'] = array(
     'label' => t('AutoFloat settings'),
-    'group' => t('CAutofloat'),
+    'group' => t('AutoFloat'),
   );
   return $prefixes;
 }
