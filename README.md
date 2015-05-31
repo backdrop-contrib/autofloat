@@ -28,7 +28,7 @@ into:
 *   Generates an organized layout automatically 
     (see image above).
 *   For non-technical editors or simply as a time-saver.
-*   Compatible with all WYSIWYG editors and the [Insert](https://github.com/backdrop-contrib/insert "GitHub project page") module.
+*   Compatible with plain HTML, all WYSIWYG editors and the [Insert](https://github.com/backdrop-contrib/insert "GitHub project page") module.
 *   Avoids inline styling. When creating a float manually with the Rich Text (WYSIWYG) editor, undesired inline code is added that cannot be overridden with CSS ([see video](http://www.youtube.com/watch?v=7taQjWHRlc4 "Avoid in-line styling in your Rich Text (WYSIWYG) Editor- YouTube.com")).
 *   Insert images later without messing up the alternating left/right floating pattern, as would happen with manually added floats.
 *   Classes are configurable to: 
