@@ -1,5 +1,5 @@
 ## AutoFloat
-<img align="right" src="https://www.drupal.org/files/styles/grid-3/public/project-images/autofloat1.jpg?itok=Y3UYOFQr">
+<img align="right" src="img/autofloat.jpg">
 A text format filter that adds an odd/even class to images or spans
 (image + caption) to make them float alternately left and right with CSS.
 
@@ -26,14 +26,14 @@ into:
 ### Features
 
 *   Generates an organized layout automatically 
-    (see image).
+    (see image above).
 *   For non-technical editors or simply as a time-saver.
 *   Compatible with all WYSIWYG editors and the [Insert](https://github.com/backdrop-contrib/insert "GitHub project page") module.
 *   Avoids inline styling. When creating a float manually with the Rich Text (WYSIWYG) editor, undesired inline code is added that cannot be overridden with CSS ([see video](http://www.youtube.com/watch?v=7taQjWHRlc4 "Avoid in-line styling in your Rich Text (WYSIWYG) Editor- YouTube.com")).
 *   Insert images later without messing up the alternating left/right floating pattern, as would happen with manually added floats.
 *   Classes are configurable to: 
-    ◦ auto float images added by other modules.
-    ◦ ignore sets of thumbnails or single images.
+    - auto float images added by other modules.
+    - ignore sets of thumbnails or single images.
 *   Configure the starting side to be left or right.
 *   Flips images to the opposite sides in right-to-left themes for multi-language sites.
 *   Pre-configured to work out-of-the-box with the [Flickr](https://github.com/backdrop-contrib/flickr "GitHub project page") module.
@@ -48,16 +48,16 @@ https://backdropcms.org/guide/modules
 ### Configuration
 
 *   Add the autofloat filter to one of your text formats at: 
-    ◦ */admin/config/content/formats*
+    - */admin/config/content/formats*
        Put it below other image related filters in the:
-    ◦ *filter processing order*   
+    - *filter processing order*   
 *   Settings at:
-    ◦ */admin/config/content/autofloat*
-    ◦ */admin/settings/autofloat*
+    - */admin/config/content/autofloat*
+    - */admin/settings/autofloat*
     Options :
-    ◦ Starting side, left or right.
-    ◦ If desired, exclude the *autofloat.css* file to use your theme's *style.css* instead.
-    ◦ Add classes to:
+    - Starting side, left or right.
+    - If desired, exclude the *autofloat.css* file to use your theme's *style.css* instead.
+    - Add classes to:
     &nbsp;&nbsp;- target a *'span'* if a caption is displayed under the image
     &nbsp;&nbsp;- exclude a *'div'* for a set of thumbnails.
 *   Re-save existing nodes you want to apply AutoFloat to.
@@ -111,6 +111,6 @@ This project is GPL v2 software. See the LICENSE.txt file in this directory for
 complete text.
 
 
-### Author & Maintainer
+### Author & maintainer
 
 - Martin Postma ([lolandese](https://www.drupal.org/u/lolandese))
