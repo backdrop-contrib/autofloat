@@ -10,7 +10,7 @@
 function autofloat_config_info() {
   $prefixes['autofloat.settings'] = array(
     'label' => t('AutoFloat settings'),
-    'group' => t('AutoFloat'),
+    'group' => t('Configuration'),
   );
   return $prefixes;
 }
