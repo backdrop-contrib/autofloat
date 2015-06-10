@@ -23,6 +23,9 @@ into:
     ‹img src="/path/photo.jpg" class="autofloat-odd"›
 
 
+### [Demo](http://lolandese.altervista.org/ "Demo site of both the Flickr and AutoFloat modules")
+
+
 ### Features
 
 *   Generates an organized layout automatically 
